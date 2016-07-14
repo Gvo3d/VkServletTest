@@ -13,11 +13,11 @@ import java.io.StringWriter;
 
 public class VKScribe {
 
-    public VKScribe() {
+    public VKScribe(Object token) {
         URIBuilder uriBuilder = new URIBuilder();
         uriBuilder.setScheme("https").setHost("api.vk.com").setPath("/method/wall.get")
-                .setParameter("domain", GROUP_DOMAIN)
-                .setParameter("access_token", ACCESS_TOKEN)
+                .setParameter("domain", "vandych_alex")
+                .setParameter("access_token", token.toString())
                 .setParameter("count", "10");
 
         HttpResponse response = HttpConnectionAgent.connectResponse(uriBuilder);
@@ -40,6 +40,8 @@ public class VKScribe {
                 JSONObject jsonResp  = (JSONObject) parser.parse(content.toString());
                 JSONArray  postsList = (JSONArray) jsonResp.get("response");
                 JSONObject unicPost  = null;
+
+                System.out.println(postsList.size());
 
                 for (int i=1; i < postsList.size(); i++) {
                     unicPost = (JSONObject) postsList.get(i);
