@@ -16,12 +16,13 @@ public class VKScribe {
     public VKScribe(Object token) {
         URIBuilder uriBuilder = new URIBuilder();
         uriBuilder.setScheme("https").setHost("api.vk.com").setPath("/method/wall.get")
-                .setParameter("domain", "vandych_alex")
+                .setParameter("domain", "club15390752")
                 .setParameter("access_token", token.toString())
                 .setParameter("count", "10");
 
         HttpResponse response = HttpConnectionAgent.connectResponse(uriBuilder);
         Integer status = response.getStatusLine().getStatusCode();
+        System.out.println(status.toString());
 
         if (status == 200) {
             StringWriter content = new StringWriter();
@@ -34,14 +35,16 @@ public class VKScribe {
             }
 
             JSONParser parser   = new JSONParser();
+            JSONArray  postsList = new JSONArray();
 
             try {
 
                 JSONObject jsonResp  = (JSONObject) parser.parse(content.toString());
-                JSONArray  postsList = (JSONArray) jsonResp.get("response");
+                postsList = (JSONArray) jsonResp.get("response");
                 JSONObject unicPost  = null;
 
-                System.out.println(postsList.size());
+                System.out.println("wha?");
+                System.out.println(jsonResp.toJSONString());
 
                 for (int i=1; i < postsList.size(); i++) {
                     unicPost = (JSONObject) postsList.get(i);

@@ -1,11 +1,9 @@
 package VKSearcher;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.net.URISyntaxException;
 
 /**
@@ -22,15 +20,15 @@ public class App {
                 "response_type=token");
         HttpResponse response = HttpConnectionAgent.connectResponse(getkey);
         Integer status = response.getStatusLine().getStatusCode();
-        StringWriter content = new StringWriter();
 
+        Object obj = null;
         try {
-            IOUtils.copy(response.getEntity().getContent(), content);
+            obj = response.getEntity().getContent();
         } catch (IOException e) {
             e.printStackTrace();
-            System.exit(-1);
         }
 
-        VKScribe vk = new VKScribe(content);
+
+        VKScribe vk = new VKScribe(obj);
     }
 }
